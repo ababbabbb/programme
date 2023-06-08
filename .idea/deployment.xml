@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="PublishConfigData" remoteFilesAllowedToDisappearOnAutoupload="false">
+  <component name="PublishConfigData" autoUpload="Always" serverName="git开源技术探索项目" remoteFilesAllowedToDisappearOnAutoupload="false">
     <serverData>
+      <paths name="git开源技术探索项目">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/home/projects/programme" local="$PROJECT_DIR$" />
+          </mappings>
+        </serverdata>
+      </paths>
       <paths name="root@43.143.25.27:22 password">
         <serverdata>
           <mappings>
@@ -24,5 +31,6 @@
         </serverdata>
       </paths>
     </serverData>
+    <option name="myAutoUpload" value="ALWAYS" />
   </component>
 </project>
