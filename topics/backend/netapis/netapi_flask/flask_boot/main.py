@@ -1,7 +1,5 @@
-from boot_framework.FrameInit import FrameInit
+from boot_framework.FrameInit import Frame
 
 
 if __name__ == '__main__':
-    app = FrameInit(__name__, __file__)
-    app.init_frame()
-    app.run()
+    Frame(__name__, __file__).init_frame().run()
