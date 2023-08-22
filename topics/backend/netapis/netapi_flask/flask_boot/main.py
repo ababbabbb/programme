@@ -1,4 +1,4 @@
-from boot_framework.FrameInit import Frame
+from boot_framework.BootFrame import Frame
 
 
 if __name__ == '__main__':

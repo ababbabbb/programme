@@ -1,6 +1,6 @@
 from flask_restful import Api
 
-from boot_framework.BasicConfig import BasicConfig
+from boot_framework.Scanner.TargetBasic import BasicConfig
 
 
 class RouterRegisterConfig(BasicConfig):
