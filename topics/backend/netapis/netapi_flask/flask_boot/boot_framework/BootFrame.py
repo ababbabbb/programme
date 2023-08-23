@@ -6,6 +6,12 @@ from flask import Flask
 
 from boot_framework.Scanner.scan import scan_config, scan_servlet
 from boot_framework.Scanner.load import load_config
+from boot_framework.default.Exception.handler import handle_exception
+from boot_framework.default.Exception.Exceptions import BootException
+from boot_framework.default.config.ServletConfig import ServletConfig
+from boot_framework.ConfigContainer import configs
+
+configs.append(ServletConfig)
 
 
 class BootFrame:
@@ -18,6 +24,7 @@ class BootFrame:
     def init_frame(self):
         self._scan()
         self._load()
+        self.app.errorhandler(BootException)(handle_exception)
 
         return self
 

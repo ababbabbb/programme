@@ -25,7 +25,7 @@ class BasicServlet(metaclass=ABCMeta):
 class BeforeServlet(BasicServlet):
 
     @abstractmethod
-    def __call__(self):
+    def __call__(self, environ, start_response):
         ...
 
 

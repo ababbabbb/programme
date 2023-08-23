@@ -1,8 +1,4 @@
-from boot_framework.default.config.ServletConfig import ServletConfig
-
-configs = [
-    ServletConfig
-]
+configs = []
 
 servlets_before = []
 servlets_back = []

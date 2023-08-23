@@ -9,7 +9,7 @@ class BootMiddleware:
     def __call__(self, environ, start_response):
         # 请求前拦截器
         for servlet_bf in servlets_before:
-            servlet_bf()
+            servlet_bf(environ, start_response)
 
         response = self.old_wsgi_app(environ, start_response)
 

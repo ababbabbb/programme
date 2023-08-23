@@ -11,6 +11,9 @@ def scan_config(directory_path):
         if 'mvc' not in r or 'config' not in r:
             continue
         for filename in filenames:
+            if filename == '__init__.py' or not filename.endswith('.py'):
+                continue
+
             try:
                 module = importlib.machinery.SourceFileLoader(
                     filename.replace(',py', ''), os.path.join(r, filename)
@@ -28,6 +31,9 @@ def scan_servlet(directory_path):
             continue
 
         for filename in filenames:
+            if filename == '__init__.py' or not filename.endswith('.py'):
+                continue
+
             try:
                 module = importlib.machinery.SourceFileLoader(
                     filename.replace(',py', ''), os.path.join(r, filename)
@@ -35,9 +41,9 @@ def scan_servlet(directory_path):
 
                 class_imported = getattr(module, filename.replace('.py', ''))
                 if issubclass(class_imported, BeforeServlet):
-                    servlets_before.append(class_imported)
+                    servlets_before.append(class_imported())
                 if issubclass(class_imported, BackServlet):
-                    servlets_back.append(class_imported)
+                    servlets_back.append(class_imported())
 
             except Exception:
                 print(traceback.format_exc())
