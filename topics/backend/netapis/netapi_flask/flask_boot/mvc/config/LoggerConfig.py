@@ -32,6 +32,7 @@ class Log:
 
 
 class LoggerConfig(BasicConfig):
+    sort = 0
     LOG_PATH = None
 
     def init_app(self, app):

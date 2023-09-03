@@ -1,9 +1,8 @@
-from flask_restful import Resource
-
+from boot_framework.default.controller.ControllerBasic import BasicController
 from mvc.entity.vo.Response.response import my_response
 
 
-class TestSysController(Resource):
+class TestSysController(BasicController):
 
     def get(self):
 

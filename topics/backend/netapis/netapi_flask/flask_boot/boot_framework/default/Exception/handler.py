@@ -2,7 +2,11 @@ from flask import jsonify
 
 
 def handle_exception(error):
-    response = {
-        'error': str(error),
-    }
-    return jsonify(response), error.code
+    response = jsonify(
+        {
+            'code': error.code,
+            'message': error.description
+        }
+    )
+    response.status_code = error.code
+    return response

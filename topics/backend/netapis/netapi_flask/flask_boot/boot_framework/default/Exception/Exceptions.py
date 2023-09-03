@@ -1,10 +1,9 @@
+from werkzeug.exceptions import HTTPException
 
 
-class BootException(Exception):
-    def __init__(self, msg: str, code: int):
-        self.msg = msg
-        self.code = code
+class BootException(HTTPException):
+    code = 500
+    description = 'Server Error'
 
-    def __str__(self):
-
-        return self.msg
+    def __init__(self, msg: str):
+        self.description = msg

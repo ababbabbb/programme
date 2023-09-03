@@ -1,4 +1,7 @@
-from boot_framework.ConfigContainer import servlets_before, servlets_back
+import json
+
+from boot_framework.ConfigContainer import servlets_before_out_context, servlets_back_out_context
+from boot_framework.default.Exception.Exceptions import BootException
 
 
 class BootMiddleware:
@@ -8,13 +11,44 @@ class BootMiddleware:
 
     def __call__(self, environ, start_response):
         # 请求前拦截器
-        for servlet_bf in servlets_before:
-            servlet_bf(environ, start_response)
+        try:
+            for servlet_bf in servlets_before_out_context:
+                servlet_bf(environ, start_response)
+        except BootException as e:
+            response = {
+                "code": e.code,
+                "message": e.description
+            }
+            start_response('200 OK', [('Content-Type', 'application/json')])
+            return [json.dumps(response).encode('utf-8')]
+        except Exception:
+            response = {
+                "code": 500,
+                "message": "前置拦截器处发生未知错误"
+            }
+            start_response('200 OK', [('Content-Type', 'application/json')])
+            return [json.dumps(response).encode('utf-8')]
 
+        # 请求处理
         response = self.old_wsgi_app(environ, start_response)
 
         # 请求后拦截器
-        for servlet_bk in servlets_back:
-            response = servlet_bk(response)
+        try:
+            for servlet_bk in servlets_back_out_context:
+                response = servlet_bk(response)
+        except BootException as e:
+            response = {
+                "code": e.code,
+                "message": e.description
+            }
+            start_response('200 OK', [('Content-Type', 'application/json')])
+            return [json.dumps(response).encode('utf-8')]
+        except Exception:
+            response = {
+                "code": 500,
+                "message": "后置拦截器处发生未知错误"
+            }
+            start_response('200 OK', [('Content-Type', 'application/json')])
+            return [json.dumps(response).encode('utf-8')]
 
         return response
