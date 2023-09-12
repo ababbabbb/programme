@@ -1,6 +1,6 @@
 from flask_sockets import Sockets
 
-from boot_framework.Scanner.TargetBasic import BasicConfig
+from boot_framework.conventions import BasicConfig
 
 
 class WebsocketRouterRegisterConfig(BasicConfig):

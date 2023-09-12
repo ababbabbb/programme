@@ -4,7 +4,7 @@ from functools import wraps
 
 from flask_sqlalchemy import SQLAlchemy
 
-from boot_framework.Scanner.TargetBasic import BasicConfig
+from boot_framework.conventions import BasicConfig
 
 
 class SqlalchemyConfig(BasicConfig):

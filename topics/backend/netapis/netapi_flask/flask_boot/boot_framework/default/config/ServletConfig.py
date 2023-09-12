@@ -1,7 +1,7 @@
 from flask import Flask
 
-from boot_framework.Scanner.TargetBasic import BasicConfig
-from boot_framework.default.servlet.BootMiddleware import BootMiddleware
+from boot_framework.core.Basics import BasicConfig
+from boot_framework.core.servlet.BootMiddleWare import BootMiddleware
 
 
 class ServletConfig(BasicConfig):

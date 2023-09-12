@@ -6,12 +6,14 @@ from flask import Flask
 
 from boot_framework.Scanner.scan import scan_config, scan_servlet, scan_servlet_out_context, scan_router_http
 from boot_framework.Scanner.load import load_config, load_router_http, load_servlet
-from boot_framework.default.Exception.handler import handle_exception
-from boot_framework.default.Exception.Exceptions import BootException
+from boot_framework.core.Exception.handler import handle_exception
+from boot_framework.core.Exception.Exceptions import BootException
 from boot_framework.default.config.ServletConfig import ServletConfig
-from boot_framework.ConfigContainer import configs
+from boot_framework.default.router.PluginHttpRouter import PluginHttpRouter
+from boot_framework.ConfigContainer import configs, router_http
 
 configs.append(ServletConfig)
+router_http.append(PluginHttpRouter)
 
 
 class BootFrame:

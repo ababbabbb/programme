@@ -2,7 +2,7 @@ from typing import Type, TypeVar, Optional
 
 from flask_restful import Resource
 
-from boot_framework.default.controller.SerializerBasic import BasicSerializer
+from boot_framework.core.Basics.serializer import BasicSerializer
 
 
 T = TypeVar('T', bound=BasicSerializer)

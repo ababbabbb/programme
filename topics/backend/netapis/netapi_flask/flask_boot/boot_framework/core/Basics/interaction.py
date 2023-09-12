@@ -1,14 +1,17 @@
-from abc import ABCMeta, abstractmethod
-from typing import Optional, Dict, Type, TypeVar
-
 from flask import Blueprint
 from flask_restful import Resource, Api
+from typing import Optional, Dict, Type, TypeVar
+
+from abc import ABCMeta, abstractmethod
+
 
 T = TypeVar('T', bound=Resource)
 
 
-class BasicConfig(metaclass=ABCMeta):
-    sort: Optional[int] = None
+class BasicInteraction(metaclass=ABCMeta):
+    """
+    交互层基类
+    """
 
     def __init__(self, app=None):
         self.app = app
@@ -17,19 +20,19 @@ class BasicConfig(metaclass=ABCMeta):
 
     @abstractmethod
     def init_app(self, app):
-        # 实际上就是达到了配置类对应的配置内容加载效果
         ...
 
 
-class BasicHttpRouter(metaclass=ABCMeta):
+class BasicHttpRouter(BasicInteraction):
+    """
+    交互层下的http路由交互基类
+    """
 
     def __init__(self, app=None):
-        self.app = app
         self.dict_resource: Optional[Dict[str, Type[T]]] = None
         self.name_bp: Optional[str] = None
         self.url_prefix: Optional[str] = None
-        if app:
-            self.init_app(app)
+        super().__init__(app)
 
     def init_app(self, app):
         self.register()
@@ -42,7 +45,7 @@ class BasicHttpRouter(metaclass=ABCMeta):
         if '/' not in self.url_prefix:
             raise ValueError('url_prefix must contain \'/\'')
 
-        blueprint = Blueprint(self.name_bp, __name__, url_prefix=self.url_prefix)
+        blueprint = Blueprint(self.name_bp.replace('.py', ''), __name__, url_prefix=self.url_prefix)
         api = Api(blueprint)
 
         for url, resource_cls in self.dict_resource.items():
@@ -52,41 +55,4 @@ class BasicHttpRouter(metaclass=ABCMeta):
 
     @abstractmethod
     def register(self):
-        ...
-
-
-class BasicServlet(metaclass=ABCMeta):
-    sort: Optional[int] = None
-
-    @abstractmethod
-    def __call__(self, *args, **kwargs):
-        # 用于实现拦截器运行，必须实现
-        ...
-
-
-class OutContextBeforeServlet(BasicServlet):
-
-    @abstractmethod
-    def __call__(self, environ, start_response):
-        ...
-
-
-class OutContextBackServlet(BasicServlet):
-
-    @abstractmethod
-    def __call__(self, response):
-        ...
-
-
-class BeforeServlet(BasicServlet):
-
-    @abstractmethod
-    def __call__(self):
-        ...
-
-
-class BackServlet(BasicServlet):
-
-    @abstractmethod
-    def __call__(self, response):
         ...

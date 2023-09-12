@@ -6,7 +6,7 @@ from flask_sqlalchemy import SQLAlchemy
 class BasicSerializer:
     db: Optional[SQLAlchemy] = None
     fields_excluded: Optional[list] = None
-    model: Optional[db.Model] = None
+    model = None
 
     def __init__(self, instance=None, data=None, **kwargs):
         self.instance = instance
