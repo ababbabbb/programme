@@ -4,16 +4,19 @@ from typing import Optional
 
 from flask import Flask
 
-from boot_framework.Scanner.scan import scan_config, scan_servlet, scan_servlet_out_context, scan_router_http
+from boot_framework.AppFactory import factories
+from boot_framework.Scanner.scan import scan_config, scan_servlet, scan_servlet_out_context, scan_router
 from boot_framework.Scanner.load import load_config, load_router_http, load_servlet
 from boot_framework.core.Exception.handler import handle_exception
 from boot_framework.core.Exception.Exceptions import BootException
 from boot_framework.default.config.ServletConfig import ServletConfig
+from boot_framework.default.config.SwaggerConfig import SwaggerConfig
 from boot_framework.default.router.PluginHttpRouter import PluginHttpRouter
-from boot_framework.ConfigContainer import configs, router_http
+from boot_framework.ConfigContainer import configs, routers
 
 configs.append(ServletConfig)
-router_http.append(PluginHttpRouter)
+configs.append(SwaggerConfig)
+routers.append(PluginHttpRouter)
 
 
 class BootFrame:
@@ -44,7 +47,7 @@ class BootFrame:
         load_servlet(self.app)
 
     def _load_router_http(self):
-        scan_router_http(self.path_dir_code)
+        scan_router(self.path_dir_code)
         load_router_http(self.app)
 
     def run(
@@ -57,9 +60,10 @@ class BootFrame:
     ) -> None:
         self.app.run(host=host, port=port, debug=debug, load_dotenv=load_dotenv, **options)
 
-    def __call__(self, name, path):
-        self.app = Flask(name)
+    def __call__(self, name, path, model='http'):
+        self.app = factories[model](name)
         self.path_dir_code = os.path.abspath(path).replace('main.py', '')
+        self.app.path_project = self.path_dir_code
 
         return self
 

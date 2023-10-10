@@ -2,8 +2,8 @@ import importlib
 import os
 import traceback
 
-from boot_framework.core.Basics import BasicConfig, BeforeServlet, BackServlet, BasicHttpRouter, OutContextBeforeServlet, OutContextBackServlet
-from boot_framework.ConfigContainer import configs, router_http, servlets_before, servlets_back, servlets_before_out_context, servlets_back_out_context
+from boot_framework.core.Basics import BasicConfig, BeforeServlet, BackServlet, BasicInteraction, OutContextBeforeServlet, OutContextBackServlet
+from boot_framework.ConfigContainer import configs, routers, servlets_before, servlets_back, servlets_before_out_context, servlets_back_out_context
 
 
 def scan_config(directory_path):
@@ -82,7 +82,7 @@ def scan_servlet_out_context(directory_path):
         servlets_back_out_context.sort(key=lambda x: x.sort)
 
 
-def scan_router_http(directory_path):
+def scan_router(directory_path):
     for r, d, filenames in os.walk(directory_path):
         if 'mvc' not in r or 'router' not in r:
             continue
@@ -97,8 +97,8 @@ def scan_router_http(directory_path):
                 ).load_module()
 
                 class_imported = getattr(module, filename.replace('.py', ''))
-                if issubclass(class_imported, BasicHttpRouter):
-                    router_http.append(class_imported)
+                if issubclass(class_imported, BasicInteraction):
+                    routers.append(class_imported)
 
             except Exception:
                 print(traceback.format_exc())

@@ -1,6 +1,6 @@
 import json
 
-from boot_framework.ConfigContainer import servlets_before, servlets_back
+from boot_framework.ConfigContainer import servlets_before_out_context, servlets_back_out_context
 from boot_framework.core.Exception.Exceptions import BootException
 
 
@@ -12,7 +12,7 @@ class BootMiddleware:
     def __call__(self, environ, start_response):
         # 请求前拦截器
         try:
-            for servlet_bf in servlets_before:
+            for servlet_bf in servlets_before_out_context:
                 servlet_bf(environ, start_response)
         except BootException as e:
             response = {
@@ -34,7 +34,7 @@ class BootMiddleware:
 
         # 请求后拦截器
         try:
-            for servlet_bk in servlets_back:
+            for servlet_bk in servlets_back_out_context:
                 response = servlet_bk(response)
         except BootException as e:
             response = {

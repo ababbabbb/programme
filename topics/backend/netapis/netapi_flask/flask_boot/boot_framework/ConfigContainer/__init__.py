@@ -1,5 +1,5 @@
 configs = []
-router_http = []
+routers = []
 servlets_before = []
 servlets_before_out_context = []
 servlets_back = []
@@ -10,7 +10,7 @@ servlets_back_out_context = []
 
 __all__ = [
     'configs',
-    'router_http',
+    'routers',
     'servlets_before',
     'servlets_back',
     'servlets_before_out_context',

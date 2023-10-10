@@ -1,6 +1,6 @@
 from flask import Flask
 
-from boot_framework.ConfigContainer import configs, router_http, servlets_before, servlets_back
+from boot_framework.ConfigContainer import configs, routers, servlets_before, servlets_back
 
 
 def load_config(app: Flask):
@@ -9,7 +9,7 @@ def load_config(app: Flask):
 
 
 def load_router_http(app: Flask):
-    for router in router_http:
+    for router in routers:
         router(app)
 
 

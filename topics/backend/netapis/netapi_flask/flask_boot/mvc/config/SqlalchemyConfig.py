@@ -1,7 +1,3 @@
-import logging
-import traceback
-from functools import wraps
-
 from flask_sqlalchemy import SQLAlchemy
 
 from boot_framework.conventions import BasicConfig
@@ -17,19 +13,5 @@ class SqlalchemyConfig(BasicConfig):
         self.db.init_app(app)
         app.db = self.db
 
-    @staticmethod
-    def transaction(func):
-        @wraps
-        def wrapper(*args, **kwargs):
-
-            try:
-                result = func(*args, **kwargs)
-                SqlalchemyConfig.db.session.commit()
-                return result
-            except Exception:
-                logging.error(traceback.format_exc())
-                SqlalchemyConfig.db.session.rollback()
-                return None
-
-        return wrapper
+        ...
 

@@ -1,5 +1,4 @@
 import traceback
-from typing import Any
 import functools
 from abc import ABCMeta, abstractmethod
 
@@ -31,7 +30,7 @@ class BasicSide(metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    def around(instance, *args, **kwargs) -> Any:
+    def around(instance, *args, **kwargs) -> dict:
         ...
 
     @staticmethod
@@ -41,17 +40,19 @@ class BasicSide(metaclass=ABCMeta):
 
     @staticmethod
     @abstractmethod
-    def after_throwing(e, instance, *args, **kwargs) -> Any:
+    def after_throwing(e, instance, *args, **kwargs) -> dict:
         ...
 
-    def __call__(self, *args, **kwargs):
+    def __call__(self, *args, **kwargs) -> dict:
+        args_original = args
+        args += (args[0].__class__.__name__+'.'+self.func.__name__,)
 
         try:
             self.before(*args, **kwargs)
             if self.arbiter_around(*args, **kwargs):
                 ret = self.around(*args, **kwargs)
             else:
-                ret = self.func(*args, **kwargs)
+                ret = self.func(*args_original, **kwargs)
             self.after(*args, **kwargs)
         except BootException:
             raise
