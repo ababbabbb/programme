@@ -1,4 +1,4 @@
-from boot_framework.conventions import BasicController
+from frame.conventions import BasicController
 from mvc.entity.vo.Response.response import my_response
 
 

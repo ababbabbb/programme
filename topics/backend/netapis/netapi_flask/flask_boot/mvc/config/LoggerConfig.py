@@ -3,7 +3,7 @@ import logging.handlers
 import os
 import re
 
-from boot_framework.conventions import BasicConfig
+from frame.conventions import BasicConfig
 
 
 class Log:

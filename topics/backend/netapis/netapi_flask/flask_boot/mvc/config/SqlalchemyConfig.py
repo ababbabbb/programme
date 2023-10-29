@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 
-from boot_framework.conventions import BasicConfig
+from frame.conventions import BasicConfig
 
 
 class SqlalchemyConfig(BasicConfig):

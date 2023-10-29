@@ -1,4 +1,4 @@
-from boot_framework.conventions import BasicHttpRouter
+from frame.conventions import BasicHttpRouter
 
 version = '1'
 

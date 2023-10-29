@@ -1,4 +1,4 @@
-from boot_framework.conventions import OutContextBeforeServlet
+from frame.conventions import OutContextBeforeServlet
 
 
 class TestServlet(OutContextBeforeServlet):

@@ -1,8 +1,8 @@
-from boot_framework.BootFrame import Frame
+from frame.App import AppContainer
 
 
 if __name__ == '__main__':
-    Frame(
+    AppContainer(
         __name__, __file__
     ).init_frame().run(
         host='0.0.0.0',
